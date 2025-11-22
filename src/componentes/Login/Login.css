@@ -108,3 +108,50 @@
 .help-icon:hover{
     transform: scale(110%);
 }
+/* Fondo semitransparente que cubre toda la ventana */
+.error-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor del mensaje */
+.error-content {
+  background: white;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  min-width: 280px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Texto de error */
+.error-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Botón Cerrar */
+.close-btn {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background-color: var(--color-primary-dark);
+}

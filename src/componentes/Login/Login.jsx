@@ -1,34 +1,34 @@
 import React, { useState } from "react";
-import { User, Lock, Accessibility, HelpCircle } from "lucide-react";
+import { User, Lock, Accessibility, HelpCircle, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // <-- Estado para mostrar errores
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Aquí podrías hacer validaciones o llamadas al backend
-    if (username.trim() && password.trim()) {
-      onLogin(); // Cambia el estado en App.js
+    const res = await window.nexoAPI.login({ username, password });
+
+    if (res.success) {
+      onLogin();
     } else {
-      alert("Por favor, completa todos los campos.");
+      setError(res.error); // <-- en lugar de alert()
     }
   };
 
   return (
     <div className="login-page">
       <div className="login-container">
-        {/* Logo principal */}
         <img
           src="/android-chrome-512x512.png"
           alt="Logo Nexo"
           className="login-logo"
         />
 
-        {/* Formulario */}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <User className="input-icon" />
@@ -61,17 +61,29 @@ const Login = ({ onLogin }) => {
           </button>
         </form>
 
-        {/* Botón de registro */}
         <Link to="/registro" className="register-link">
           ¿No tienes cuenta? <strong>Regístrate</strong>
         </Link>
       </div>
 
-      {/* Iconos inferiores (idénticos al header) */}
       <div className="bottom-icons">
         <Accessibility className="accessibility-icon" />
         <HelpCircle className="help-icon" />
       </div>
+
+
+      {/* Modal de error */}
+      {error && (
+        <div className="error-modal">
+          <div className="error-content">
+            <p>{error}</p>
+            <button onClick={() => setError("")} className="close-btn">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

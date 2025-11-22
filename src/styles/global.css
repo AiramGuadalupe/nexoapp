@@ -1,0 +1,99 @@
+/* Importar fuente Inter desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ===========================
+   VARIABLES DE COLOR Y FUENTE
+   =========================== */
+:root {
+  /* Colores base */
+  --color-primary: #0B3549;
+  --color-primary-dark: #0A2C3C;
+  --color-white: #FFFFFF;
+
+  /* Tipografía */
+  --font-main: 'Inter', sans-serif;
+
+  /* Tamaños */
+  --font-size-small: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-large: 1.25rem;
+
+  /* Espaciado */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+/* ===========================
+   RESETEO GLOBAL
+   =========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   ESTILOS BASE
+   =========================== */
+html, body {
+  font-family: var(--font-main);
+  font-size: var(--font-size-base);
+  background-color: var(--color-white);
+  color: var(--color-primary-dark);
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Enlaces */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-primary-dark);
+}
+
+/* Botones genéricos */
+button {
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 6px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Titulares */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+/* ===========================
+   UTILIDADES
+   =========================== */
+.text-center {
+  text-align: center;
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.bg-dark {
+  background-color: var(--color-primary-dark);
+  color: var(--color-white);
+}

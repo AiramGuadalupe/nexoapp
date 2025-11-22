@@ -1,0 +1,147 @@
+
+
+.registro-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: white;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Caja principal */
+.registro-container {
+  background-color: #fff;
+  border: 2px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 2.5rem 3rem;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo superior */
+.registro-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.registro-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+/* Contenido: ícono + formulario */
+.registro-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 3rem;
+  margin-top: 1.5rem;
+}
+
+/* Ícono de usuario grande */
+.registro-avatar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-icon {
+  width: 200px;
+  height: 200px;
+  color: var(--color-primary);
+  background-color: #e8f1f3;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+/* Formulario */
+.registro-form {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-section h3 {
+  font-size: 1rem;
+  color: var(--color-primary);
+  margin-bottom: 0.4rem;
+}
+
+.form-section input,
+.telefono-group select {
+  width: 100%;
+  padding: 0.65rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 14px;
+  outline: none;
+  font-size: 0.95rem;
+  margin: 2px;
+}
+
+.telefono-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Footer con checkbox + botón */
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.8rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+.btn-registrar {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 0.7rem 1.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-registrar:hover {
+  background-color: var(--color-accent);
+}
+
+/* Iconos inferiores */
+.bottom-icons {
+  position: absolute;
+  bottom: 25px;
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.accessibility-icon,
+.help-icon {
+  color: var(--color-primary);
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.accessibility-icon:hover,
+.help-icon:hover {
+  transform: scale(1.1);
+}

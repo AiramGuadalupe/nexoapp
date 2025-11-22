@@ -1,0 +1,106 @@
+.sidebar {
+  width: 90px;
+  background-color: var(--color-primary);
+  border-radius: 25px;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 92vh;
+  margin: 1rem;
+  position: relative;
+  transition: width 0.3s ease;
+  overflow: visible;
+  z-index: 9999; /* Sidebar siempre arriba */
+}
+
+/* Sidebar abierto */
+.sidebar.open {
+  width: 240px;
+}
+
+.sidebar__top,
+.sidebar__bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem;
+  width: 100%;
+  padding-left: 1rem;
+}
+
+.sidebar__btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-white);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  border-radius: 12px;
+  padding: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.sidebar__btn:hover,
+.sidebar__btn.active {
+  background-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.sidebar__icon {
+  width: 26px;
+  height: 26px;
+}
+
+/* Etiquetas visibles solo cuando está abierto */
+.sidebar__label {
+  font-size: 1rem;
+  color: var(--color-white);
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* Flecha flotante fuera del sidebar */
+.sidebar__arrow {
+  position: absolute;
+  right: -18px;
+  top: 42%;
+  transform: translateY(-50%);
+  background-color: var(--color-primary);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: var(--color-white);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+/* Rotación cuando sidebar está abierto */
+.sidebar.open .sidebar__arrow {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.sidebar__arrow:hover {
+  background-color: var(--color-accent);
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Fondo oscuro cuando está abierto */
+.sidebar__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 10000;}

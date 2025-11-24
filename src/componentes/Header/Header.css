@@ -1,4 +1,9 @@
 .header {
+  position: fixed;
+  z-index: 20000;
+  top: 5px; /* espacio desde la parte superior */
+  left: 50%;               /* posición horizontal al 50% */
+  transform: translateX(-50%); 
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -7,15 +7,19 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 92vh;
-  margin: 1rem;
-  position: relative;
+  margin-left: 2.5%;
+  position: fixed; /* ← FIX */
+  top: 100px;      /* ↓ Ahora respeta tu header */
+
+  height: 83%; /* ← Ya NO se corta */
+
+
   transition: width 0.3s ease;
   overflow: visible;
-  z-index: 9999; /* Sidebar siempre arriba */
+  z-index: 10000; /* Sidebar siempre arriba */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
 }
 
-/* Sidebar abierto */
 .sidebar.open {
   width: 240px;
 }
@@ -55,7 +59,6 @@
   height: 26px;
 }
 
-/* Etiquetas visibles solo cuando está abierto */
 .sidebar__label {
   font-size: 1rem;
   color: var(--color-white);
@@ -63,7 +66,6 @@
   transition: opacity 0.2s ease;
 }
 
-/* Flecha flotante fuera del sidebar */
 .sidebar__arrow {
   position: absolute;
   right: -18px;
@@ -80,27 +82,14 @@
   cursor: pointer;
   color: var(--color-white);
   transition: transform 0.2s ease, background-color 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.75);
   z-index: 10;
 }
 
-/* Rotación cuando sidebar está abierto */
 .sidebar.open .sidebar__arrow {
   transform: translateY(-50%) rotate(180deg);
 }
 
 .sidebar__arrow:hover {
-  background-color: var(--color-accent);
   transform: translateY(-50%) scale(1.1);
 }
-
-/* Fondo oscuro cuando está abierto */
-.sidebar__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(2px);
-  z-index: 10000;}

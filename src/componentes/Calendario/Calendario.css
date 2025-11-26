@@ -1,0 +1,21 @@
+.calendario {
+  padding: 2rem;
+  color: var(--color-primary-dark);
+  width: 100%;
+  max-width: 600px;
+}
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.event-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}

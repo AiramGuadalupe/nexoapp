@@ -19,6 +19,18 @@ function initDatabase() {
       created_at TEXT DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  db.exec(`
+  CREATE TABLE IF NOT EXISTS events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    date TEXT NOT NULL,
+    time TEXT,
+    description TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  );
+`);
 
   console.log("Base de datos lista:", dbPath);
 }
@@ -28,7 +40,7 @@ function createWindow() {
     width: 1200,
     height: 800,
     icon: path.join(__dirname, '../public/apple-touch-icon.png'),
-    // frame: false,
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
@@ -64,9 +76,9 @@ ipcMain.handle("register-user", async (event, { username, password }) => {
   try {
     const hash = bcrypt.hashSync(password, 10);
     const stmt = db.prepare("INSERT INTO users (username, password_hash) VALUES (?, ?)");
-    stmt.run(username, hash);
+    const result = stmt.run(username, hash); // <-- obtiene el id insertado
 
-    return { success: true };
+    return { success: true, user: { id: result.lastInsertRowid, username } };
   } catch (err) {
     if (err.code === "SQLITE_CONSTRAINT_UNIQUE") {
       return { success: false, error: "El nombre de usuario ya existe." };
@@ -87,4 +99,26 @@ ipcMain.handle("login-user", async (event, { username, password }) => {
   if (!ok) return { success: false, error: "Contraseña incorrecta." };
 
   return { success: true, user: { id: user.id, username: user.username } };
+});
+// Obtener eventos
+ipcMain.handle("get-events", async (event, userId) => {
+  const stmt = db.prepare("SELECT * FROM events WHERE user_id = ? ORDER BY date, time");
+  const events = stmt.all(userId);
+  return events;
+});
+
+// Añadir evento
+ipcMain.handle("add-event", async (event, { userId, title, date, time, description }) => {
+  const stmt = db.prepare(
+    "INSERT INTO events (user_id, title, date, time, description) VALUES (?, ?, ?, ?, ?)"
+  );
+  stmt.run(userId, title, date, time, description);
+  return { success: true };
+});
+
+// Eliminar evento
+ipcMain.handle("delete-event", async (event, id) => {
+  const stmt = db.prepare("DELETE FROM events WHERE id = ?");
+  stmt.run(id);
+  return { success: true };
 });

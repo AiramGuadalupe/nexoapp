@@ -1,0 +1,272 @@
+.calendario-layout {
+    
+    position: fixed;
+    top: 100px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  width: 70%;
+  height: fit-content;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.calendario-mensual {
+  width: 80%;
+  height: 75%;
+  background: white;
+  /* border: 2px solid var(--color-primary); */
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.cal-header button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cal-header button:hover {
+  background: var(--color-accent);
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  flex: 1;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.cal-day-header {
+  font-weight: 600;
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.cal-day {
+  background: white;
+  border: 1px solid var(--color-primary-light);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.cal-day:hover {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.cal-day.has-event::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 50%;
+}
+
+.cal-day.empty {
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+/* Panel lateral */
+.cal-event-sidebar {
+
+  width: 15%;
+  height: 100%;
+  background: white;
+  border: 2px solid var(--color-primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-event-sidebar h4 {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+}
+
+.no-events {
+  font-size: 0.9rem;
+  color: var(--color-primary-light);
+}
+
+.event-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.event-item {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 0.5rem;
+}
+
+.event-date {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.event-time {
+  font-size: 0.75rem;
+  color: var(--color-primary-light);
+}
+
+.event-title {
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+/* Modal */
+.cal-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.cal-modal-content {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cal-modal-content input,
+.cal-modal-content textarea {
+  padding: 0.5rem;
+  border: 1px solid var(--color-primary-light);
+  border-radius: 8px;
+  font-family: var(--font-main);
+}
+
+.cal-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.cal-modal-buttons button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: background 0.2s;
+}
+
+.cal-modal-buttons button[type="submit"] {
+  background: var(--color-primary);
+  color: white;
+}
+
+.cal-modal-buttons button[type="button"] {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.cal-modal-buttons button:hover {
+  filter: brightness(1.1);
+}
+/* ===== PAGINACIÓN DE EVENTOS ===== */
+.cal-event-pagination {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+
+.cal-event-pagination button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cal-event-pagination button:disabled {
+  background: var(--color-primary-light);
+  cursor: not-allowed;
+}
+
+.cal-event-pagination button:hover:not(:disabled) {
+  background: var(--color-accent);
+}
+
+/* ===== BOTÓN ELIMINAR EN MODAL ===== */
+.cal-modal-buttons .btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.cal-modal-buttons .btn-delete:hover {
+  filter: brightness(1.1);
+}
+
+/* ===== OVERLAY MODAL CLICKEABLE ===== */
+.cal-modal {
+  cursor: pointer;
+}
+
+.cal-modal-content {
+  cursor: default;
+}
+
+/* ===== LISTA DE EVENTOS CLICKABLE (OPCIONAL) ===== */
+.event-item {
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+}
+
+.event-item:hover {
+  background: var(--color-primary-light);
+  color: white;
+}

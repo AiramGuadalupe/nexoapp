@@ -1,31 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import Calendario from "../Calendario/Calendario";
 import "../../styles/global.css";
 import "./Home.css";
-
+/*modificar ctrlz */
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.id) setUserId(user.id);
+  }, []);
+
+  if (!userId) return <p>Cargando usuario...</p>;
 
   return (
     <div className="home-page">
       <div className="home-container">
-        <Sidebar
-          active="calendario"
-          open={open}
-          toggleSidebar={() => setOpen(!open)}
-        />
-
+        <Sidebar active="calendario" open={open} toggleSidebar={() => setOpen(!open)} />
         <main className="home-content">
-          <img
-            src="/android-chrome-512x512.png"
-            alt="Nexo Logo"
-            className="home-logo"
-          />
-          <h1>Bienvenido a NEXO</h1>
-          <p>
-            Esta es tu página principal. Desde aquí podrás acceder a todas las
-            herramientas y servicios de tu aplicación.
-          </p>
+          <Calendario userId={userId} />
         </main>
       </div>
     </div>

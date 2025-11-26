@@ -13,8 +13,8 @@ const Registro = ({ onRegister }) => {
     acepta: false,
   });
 
-  const [message, setMessage] = useState(""); // Mensaje de modal
-  const [isError, setIsError] = useState(true); // Diferencia error o éxito
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(true);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -27,7 +27,6 @@ const Registro = ({ onRegister }) => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // Validaciones
     if (!form.acepta) {
       setMessage("Debes aceptar los términos y condiciones.");
       setIsError(true);
@@ -50,14 +49,13 @@ const Registro = ({ onRegister }) => {
       const res = await window.nexoAPI.register({
         username: form.username,
         password: form.password,
-        nombre: form.nombre,
-        apellidos: form.apellidos,
-        telefono: `${form.prefijo} ${form.telefono}`,
       });
 
       if (res.success) {
-        setMessage("Registrado correctamente. Ahora inicia sesión.");
+        localStorage.setItem("user", JSON.stringify(res.user));
+        setMessage("Registrado correctamente. Serás redirigido...");
         setIsError(false);
+
         if (onRegister) onRegister();
       } else {
         setMessage(res.error);
@@ -87,7 +85,6 @@ const Registro = ({ onRegister }) => {
           </div>
 
           <form className="registro-form" onSubmit={handleRegister}>
-            {/* Usuario */}
             <div className="form-section">
               <h3>Usuario</h3>
               <input
@@ -104,7 +101,6 @@ const Registro = ({ onRegister }) => {
               />
             </div>
 
-            {/* Datos personales */}
             <div className="form-section">
               <h3>Datos personales</h3>
               <input
@@ -121,7 +117,6 @@ const Registro = ({ onRegister }) => {
               />
             </div>
 
-            {/* Teléfono */}
             <div className="form-section">
               <h3>Teléfono</h3>
               <div className="telefono-group">
@@ -143,7 +138,6 @@ const Registro = ({ onRegister }) => {
               </div>
             </div>
 
-            {/* Footer */}
             <div className="form-footer">
               <label className="checkbox-container">
                 <input
@@ -166,7 +160,6 @@ const Registro = ({ onRegister }) => {
         <HelpCircle className="help-icon" />
       </div>
 
-      {/* Modal de mensaje */}
       {message && (
         <div className="message-modal">
           <div className={`message-content ${isError ? "error" : "success"}`}>

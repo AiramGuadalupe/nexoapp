@@ -14,6 +14,7 @@ const Login = ({ onLogin }) => {
     const res = await window.nexoAPI.login({ username, password });
 
     if (res.success) {
+      localStorage.setItem("user", JSON.stringify(res.user));
       onLogin();
     } else {
       setError(res.error); // <-- en lugar de alert()

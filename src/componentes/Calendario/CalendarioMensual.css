@@ -37,13 +37,13 @@
   border-radius: 50%;
   width: 36px;
   height: 36px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: background 0.2s;
+transition: background-color 0.s ease;
 }
 
 .cal-header button:hover {
-  background: var(--color-accent);
+  background: var(--color-primary-light);
 }
 
 .cal-grid {
@@ -194,7 +194,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-family: var(--font-main);
-  transition: background 0.2s;
+transition: background-color 0.s ease;
 }
 
 .cal-modal-buttons button[type="submit"] {

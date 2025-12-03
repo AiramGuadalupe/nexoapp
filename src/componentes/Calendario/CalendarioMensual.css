@@ -155,7 +155,9 @@
   font-size: 0.75rem;
   color: var(--color-primary-light);
 }
-
+.event-time:hover{
+  color: var(--color-primary);
+}
 .event-title {
   font-size: 0.9rem;
   margin-top: 2px;

@@ -1,0 +1,100 @@
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: var(--color-white);
+  border: 2px solid var(--color-primary);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+.popup-body {
+  flex: 1;
+  overflow: auto;
+}
+
+.popup-footer {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.report-select {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid var(--color-primary-light);
+  border-radius: 8px;
+  font-family: var(--font-main);
+  margin-bottom: 1rem;
+}
+
+.report-preview {
+  margin-bottom: 1rem;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.report-preview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.report-preview th,
+.report-preview td {
+  border: 1px solid var(--color-primary-light);
+  padding: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.report-preview th {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.btn-download {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-download:hover {
+  background: var(--color-accent);
+}

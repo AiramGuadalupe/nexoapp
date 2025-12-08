@@ -144,7 +144,108 @@ html.dark .login-acc-label {
   color: var(--color--primary-light);
 }
 /*REGISTRO*/
+/* ===== MODO OSCURO – REGISTRO COMPLETO – SIN TOCAR CSS BASE ===== */
 
+/* Fondo general */
+html.dark,
+html.dark body {
+  background-color: var(--color--background);
+}
+
+/* Contenedor del registro */
+html.dark .registro-page {
+  background: var(--color--background);
+}
+
+html.dark .registro-container {
+  background: var(--color--primary);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+/* Campos de entrada */
+html.dark .registro-form input,
+html.dark .registro-form select {
+  background: var(--color--background);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+/* Botón de registrar */
+html.dark .btn-registrar {
+  background: var(--color--primary-dark);
+  border: 1px solid var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .btn-registrar:hover {
+  background: var(--color--accent);
+  color: var(--color--background);
+}
+
+/* Iconos inferiores */
+html.dark .accessibility-icon,
+html.dark .help-icon {
+  color: var(--color--white);
+}
+
+html.dark .accessibility-icon:hover,
+html.dark .help-icon:hover {
+  color: var(--color--primary-light);
+}
+
+/* Logo más claro en oscuro */
+html.dark .registro-logo {
+  filter: brightness(0.8) invert(1);
+}
+
+/* Modal de mensaje */
+html.dark .message-modal {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+html.dark .message-content {
+  background: var(--color--background);
+  border: 1px solid var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .message-content p {
+  color: var(--color--white);
+}
+html.dark .form-section h3, html.dark .form-footer span{
+  color: var(--color--white);
+}
+html.dark .message-content button {
+  background: var(--color--primary-light);
+  color: var(--color--white);
+}
+html.dark .message-content button:hover {
+  background: var(--color--accent);
+  color: var(--color--background);
+}
+
+/* Menú de accesibilidad */
+html.dark .registro-acc-menu {
+  background: var(--color--background);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .registro-acc-menu button {
+  color: var(--color--white);
+}
+
+html.dark .registro-acc-menu button:hover {
+  background-color: var(--color--primary-light);
+}
+
+html.dark .registro-acc-label {
+  color: var(--color--primary-light);
+}
+html.dark .avatar-icon{
+  color: var(--color--primary-light);
+}
 /* HOME */
 html.dark .header {
   background: var(--color--primary);

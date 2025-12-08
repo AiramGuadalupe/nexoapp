@@ -49,7 +49,103 @@ html.dark * {
 html.dark body{
   background-color: var(--color--background);
 }
-/* ===== MODO OSCURO – SIN TOCAR CSS BASE ===== */
+html.dark .login-page{
+  background-color: var(--color--background);
+}
+/*LOGIN*/
+html.dark .login-page {
+  background-color: var(--color--background);
+}
+
+html.dark .login-container {
+  background: var(--color--primary);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+html.dark .register-link, html.dark .forgot-link, html.dark .input-icon{
+  color: var(--color--white);
+}
+/* Campos de entrada */
+html.dark .input-group input {
+  background: var(--color--background);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+/* Botón de login */
+html.dark .login-btn {
+  background: var(--color--primary-dark);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .login-btn:hover {
+  background: var(--color--accent);
+  color: var(--color--background);
+}
+
+/* Logo más claro en oscuro */
+html.dark .login-logo {
+  filter: brightness(0.8) invert(1);
+}
+
+/* Iconos inferiores */
+html.dark .accessibility-icon,
+html.dark .help-icon {
+  color: var(--color--white);
+}
+
+html.dark .accessibility-icon:hover,
+html.dark .help-icon:hover {
+  color: var(--color--primary-light);
+}
+
+/* Modal de error */
+html.dark .error-modal {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+html.dark .error-content {
+  background: var(--color--background);
+  border: 1px solid var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .error-content p {
+  color: var(--color--white);
+}
+
+html.dark .close-btn {
+  background: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .close-btn:hover {
+  background: var(--color--accent);
+  color: var(--color--background);
+}
+
+/* Menú de accesibilidad */
+html.dark .login-acc-menu {
+  background: var(--color--background);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .login-acc-menu button {
+  color: var(--color--white);
+}
+
+html.dark .login-acc-menu button:hover {
+  background-color: var(--color--primary-light);
+}
+
+html.dark .login-acc-label {
+  color: var(--color--primary-light);
+}
+/*REGISTRO*/
+
+/* HOME */
 html.dark .header {
   background: var(--color--primary);
   border-color: var(--color--primary-light);

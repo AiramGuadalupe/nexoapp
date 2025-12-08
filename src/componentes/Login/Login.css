@@ -155,3 +155,61 @@
 .close-btn:hover {
   background-color: var(--color-primary-dark);
 }
+/* ===== ACCESIBILIDAD EN LOGIN – SIN TOCAR CSS BASE ===== */
+
+.login-acc {
+  position: relative;
+}
+
+.login-acc-menu {
+  position: absolute;
+  bottom: 50px; /* debajo del icono */
+  left: 0;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-primary);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 25;
+  padding: 0.5rem;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.login-acc-menu button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.login-acc-menu button:hover {
+  background-color: var(--color-primary-light);
+}
+
+.login-acc-submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  padding-left: 1.2rem;
+}
+
+.login-acc-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  margin-bottom: 0.2rem;
+}

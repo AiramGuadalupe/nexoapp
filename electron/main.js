@@ -32,7 +32,18 @@ function initDatabase() {
       FOREIGN KEY(user_id) REFERENCES users(id)
     );
   `);
-
+  db.exec(`
+  CREATE TABLE IF NOT EXISTS notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
+    content TEXT,
+    tag TEXT,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id)
+  );
+`);
   console.log("Base de datos lista:", dbPath);
 }
 
@@ -112,7 +123,34 @@ ipcMain.handle("delete-event", async (event, id) => {
   stmt.run(id);
   return { success: true };
 });
+// NOTES
+ipcMain.handle("get-notes", async (event, { userId, tag }) => {
+  const stmt = tag
+    ? db.prepare("SELECT * FROM notes WHERE user_id = ? AND tag = ? ORDER BY updated_at DESC")
+    : db.prepare("SELECT * FROM notes WHERE user_id = ? ORDER BY updated_at DESC");
+  return tag ? stmt.all(userId, tag) : stmt.all(userId);
+});
 
+ipcMain.handle("add-note", async (event, { userId, title, content, tag }) => {
+  const stmt = db.prepare(
+    "INSERT INTO notes (user_id, title, content, tag) VALUES (?, ?, ?, ?)"
+  );
+  stmt.run(userId, title, content, tag);
+  return { success: true };
+});
+
+ipcMain.handle("update-note", async (event, { id, title, content, tag }) => {
+  const stmt = db.prepare(
+    "UPDATE notes SET title = ?, content = ?, tag = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?"
+  );
+  stmt.run(title, content, tag, id);
+  return { success: true };
+});
+
+ipcMain.handle("delete-note", async (event, id) => {
+  db.prepare("DELETE FROM notes WHERE id = ?").run(id);
+  return { success: true };
+});
 // ===== INFORMES SOLO CON TABLAS EXISTENTES =====
 
 // 1. Total de tareas/eventos del usuario

@@ -1,12 +1,18 @@
 import { CalendarDays, PiggyBank, FileText, Settings } from "lucide-react";
 import "./Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({ active, open, toggleSidebar, onSettingsClick }) => {
+
+  const navigate = useNavigate();
   return (
     <>
       <aside className={`sidebar ${open ? "open" : ""}`}>
         <div className="sidebar__top">
-          <button className={`sidebar__btn ${active === "calendario" ? "active" : ""}`}>
+          <button
+            className={`sidebar__btn ${active === "calendario" ? "active" : ""}`}
+            onClick={() => navigate("/")}
+          >
             <CalendarDays className="sidebar__icon" />
             {open && <span className="sidebar__label">Calendario</span>}
           </button>
@@ -14,7 +20,10 @@ const Sidebar = ({ active, open, toggleSidebar, onSettingsClick }) => {
             <PiggyBank className="sidebar__icon" />
             {open && <span className="sidebar__label">Finanzas</span>}
           </button>
-          <button className={`sidebar__btn ${active === "notas" ? "active" : ""}`}>
+          <button
+            className={`sidebar__btn ${active === "notas" ? "active" : ""}`}
+            onClick={() => navigate("/notas")}
+          >
             <FileText className="sidebar__icon" />
             {open && <span className="sidebar__label">Notas</span>}
           </button>

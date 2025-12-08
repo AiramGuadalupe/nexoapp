@@ -10,7 +10,12 @@ contextBridge.exposeInMainWorld("nexoAPI", {
   getEvents: (userId) => ipcRenderer.invoke("get-events", userId),
   addEvent: (data) => ipcRenderer.invoke("add-event", data),
   deleteEvent: (id) => ipcRenderer.invoke("delete-event", id),
-
+  // Notas
+  getNotes: (query) => ipcRenderer.invoke("get-notes", query),
+  addNote: (data) => ipcRenderer.invoke("add-note", data),
+  updateNote: (data) => ipcRenderer.invoke("update-note", data),
+  deleteNote: (id) => ipcRenderer.invoke("delete-note", id),
+  
   generateReport: (query) => ipcRenderer.invoke("generate-report", query),
 
 });

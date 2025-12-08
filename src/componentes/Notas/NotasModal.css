@@ -1,0 +1,115 @@
+/* ========= OVERLAY ========= */
+.notas-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  cursor: pointer;
+}
+
+/* ========= CAJA MODAL ========= */
+.notas-modal-box {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  cursor: default;
+}
+
+.notas-modal-box h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+}
+
+.notas-modal-box input,
+.notas-modal-box textarea,
+.notas-modal-box select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-primary-light);
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.notas-modal-box textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ========= FOOTER ========= */
+.notas-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.notas-modal-footer button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+  transition: filter 0.2s ease;
+}
+
+.notas-modal-footer button[type="button"] {
+  background: var(--color-primary-light);
+  color: white;
+}
+
+.notas-modal-footer button[type="submit"] {
+  background: var(--color-primary);
+  color: white;
+}
+
+.notas-modal-footer .notas-btn-delete {
+  background: #e74c3c;
+  color: white;
+  margin-right: auto;
+}
+
+.notas-modal-footer button:hover {
+  filter: brightness(1.1);
+}
+
+/* ========= MODO OSCURO ========= */
+html.dark .notas-modal-box {
+  background: var(--color--background);
+  border: 1px solid var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .notas-modal-box input,
+html.dark .notas-modal-box textarea,
+html.dark .notas-modal-box select {
+  background: var(--color--background);
+  border-color: var(--color--primary-light);
+  color: var(--color--white);
+}
+
+html.dark .notas-modal-footer button[type="button"] {
+  background: var(--color--primary-light);
+}
+html.dark h3{
+  color: var(--color--white);
+}
+
+html.dark .notas-modal-footer button[type="submit"] {
+  background: var(--color--primary);
+}
+
+html.dark .notas-modal-footer .notas-btn-delete {
+  background: #ef4444;
+}

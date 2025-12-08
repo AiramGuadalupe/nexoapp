@@ -5,6 +5,7 @@ import Header from "./componentes/Header/Header";
 import Home from "./componentes/Home/Home";
 import Login from "./componentes/Login/Login";
 import Register from "./componentes/Registro/Registro";
+import NotasPage from "./componentes/Notas/NotasPage";
 import TitleBar from "./componentes/TitleBar/TitleBar";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="*" element={<Navigate to="/" />} />
+              <Route path="/notas" element={<NotasPage />} />
             </Routes>
           </main>
         </>

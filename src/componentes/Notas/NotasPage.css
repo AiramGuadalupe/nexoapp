@@ -1,0 +1,25 @@
+/* mismo que Home.css */
+.home-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-background);
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+}
+
+.home-container {
+  display: flex;
+  flex: 1;
+  align-items: stretch;
+  width: 100%;
+}
+
+.home-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  overflow: auto;
+  width: 100%;
+}

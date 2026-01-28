@@ -10,8 +10,8 @@
 }
 
 .popup-content {
-  background: var(--color-white);
-  border: 2px solid var(--color-primary);
+  background: var(--color-white, #fff);
+  border: 2px solid var(--color-primary, #ddd);
   border-radius: 16px;
   width: 90%;
   max-width: 700px;
@@ -33,68 +33,241 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--color-primary);
+  color: var(--color-primary, #333);
 }
 
 .popup-body {
   flex: 1;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
+/* --- CONTROLES --- */
+.reports-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+  width: 100%;
+}
+
+.report-select {
+  flex: 1;
+  padding: 0.4rem;
+  border: 1px solid var(--color-primary-light, #ccc);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+/* --- TABLA Y PREVIEW --- */
+.report-preview {
+  margin-bottom: 1rem;
+  flex: 1;
+  overflow: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.report-preview table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-preview th,
+.report-preview td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.report-preview th {
+  background: var(--color-primary-light, #f0f0f0);
+  color: #333;
+  position: sticky;
+  top: 0;
+}
+
+/* === ESTILO ESPECIAL AIRAM (Línea Roja) === */
+.report-preview.style-airam table {
+  border-collapse: collapse;
+}
+
+.report-preview.style-airam th {
+  border: 1px solid #ccc;
+}
+
+.report-preview.style-airam td {
+  border: none;
+  border-bottom: 2px solid red !important;
+  color: #333;
+}
+
+/* ========================================= */
+
+
+/* --- FOOTER Y BOTONES --- */
 .popup-footer {
   margin-top: 0.5rem;
   display: flex;
   justify-content: flex-end;
 }
 
-.report-select {
-  width: 100%;
-  padding: 0.4rem;
-  border: 1px solid var(--color-primary-light);
-  border-radius: 8px;
-  font-family: var(--font-main);
-  margin-bottom: 1rem;
-}
-
-.report-preview {
-  margin-bottom: 1rem;
-  max-height: 300px;
-  overflow: auto;
-}
-
-.report-preview table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 0.5rem;
-}
-
-.report-preview th,
-.report-preview td {
-  border: 1px solid var(--color-primary-light);
-  padding: 0.4rem;
-  font-size: 0.85rem;
-}
-
-.report-preview th {
-  background: var(--color-primary-light);
-  color: white;
-}
-
 .btn-download {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: var(--color-primary);
+  gap: 8px;
+  background-color: #e74c3c;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
+  padding: 10px 15px;
+  border-radius: 5px;
   cursor: pointer;
-  font-family: var(--font-main);
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  font-size: 14px;
 }
 
-.btn-download:hover {
-  background: var(--color-accent);
+.btn-download:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-icon {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+}
+
+.btn-icon:hover {
+  background: #e0e0e0;
+}
+
+.btn-danger {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  background: #fff;
+}
+
+.btn-danger:hover {
+  background: #ffe6e6;
+}
+
+/* --- BUILDER UI --- */
+.builder-container {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.builder-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.builder-field label {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.builder-field input[type="text"],
+.builder-field select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.columns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  background: white;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+.checkbox-label:hover {
+  background: #f0f8ff;
+  border-color: #b0d4f1;
+}
+
+.builder-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-save {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-cancel {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* ... (Mantén tus estilos anteriores de popup, controles y style-airam) ... */
+
+/* --- NUEVOS ESTILOS PARA CABECERA CON LOGO --- */
+.preview-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-primary, #ddd);
+}
+
+.preview-header-container h3 {
+  margin: 0;
+  color: var(--color-primary, #0B3549);
+}
+
+.preview-logo {
+  height: 40px;
+  /* Ajusta este tamaño según tu logo */
+  width: auto;
+  object-fit: contain;
+}
+
+/* Ajuste para que el título no choque con el botón de cerrar del popup superior */
+.popup-header {
+  /* Aseguramos que el header del popup (la X de cerrar) siga viéndose bien */
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 }

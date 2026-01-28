@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { User, Lock, Accessibility, HelpCircle, X, Sun, Moon, Palette, Type } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./Login.css";
+import { useManual } from "../../context/ManualContext";
 
 
 const Login = ({ onLogin }) => {
@@ -9,9 +10,11 @@ const Login = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // <-- Estado para mostrar errores
   const [accMenuOpen, setAccMenuOpen] = useState(false);
-  const [helpOpen, setHelpOpen] = useState(false);
+  // const [helpOpen, setHelpOpen] = useState(false); // Removed unused local state if present, or just ignore. The original code had it.
+  // Actually, I should just check if I need to remove it or just add the hook.
+  const { openManual } = useManual();
   const accRef = useRef(null);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Detecta modo oscuro del sistema
   useEffect(() => {
@@ -176,7 +179,7 @@ const Login = ({ onLogin }) => {
             </div>
           )}
         </div>
-        <HelpCircle className="help-icon" />
+        <HelpCircle className="help-icon" onClick={openManual} style={{ cursor: "pointer" }} />
       </div>
 
 

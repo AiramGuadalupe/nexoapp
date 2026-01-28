@@ -1,5 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
+const fs = require("fs");
+const reportManager = require("./reportManager");
 const Database = require("better-sqlite3");
 const bcrypt = require("bcryptjs");
 
@@ -43,7 +45,18 @@ function initDatabase() {
     updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id)
   );
-`);
+  `);
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS custom_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      entity TEXT NOT NULL,
+      columns TEXT NOT NULL,
+      created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    );
+  `);
   console.log("Base de datos lista:", dbPath);
 }
 
@@ -151,79 +164,146 @@ ipcMain.handle("delete-note", async (event, id) => {
   db.prepare("DELETE FROM notes WHERE id = ?").run(id);
   return { success: true };
 });
-// ===== INFORMES SOLO CON TABLAS EXISTENTES =====
-
-// 1. Total de tareas/eventos del usuario
-ipcMain.handle("report-task-count", async (event, { userId }) => {
-  const total = db.prepare("SELECT COUNT(*) as count FROM events WHERE user_id = ?").get(userId).count;
-  const byMonth = db.prepare(`
-    SELECT strftime('%Y-%m', date) as month, COUNT(*) as count
-    FROM events
-    WHERE user_id = ?
-    GROUP BY month
-    ORDER BY month
-  `).all(userId);
-  return { total, byMonth };
+ipcMain.handle("get-reports-list", async (event, userId) => {
+  return reportManager.getReportsList(db, userId);
 });
 
-// 2. Días más productivos (más tareas)
-ipcMain.handle("report-top-days", async (event, { userId }) => {
-  return db.prepare(`
-    SELECT date, COUNT(*) as taskCount
-    FROM events
-    WHERE user_id = ?
-    GROUP BY date
-    ORDER BY taskCount DESC
-    LIMIT 10
-  `).all(userId);
+ipcMain.handle("save-custom-report", async (event, { userId, title, entity, columns }) => {
+  const stmt = db.prepare("INSERT INTO custom_reports (user_id, title, entity, columns) VALUES (?, ?, ?, ?)");
+  stmt.run(userId, title, entity, JSON.stringify(columns));
+  return { success: true };
 });
 
-// 3. Evolución mensual (gráfico simple)
-ipcMain.handle("report-month-evolution", async (event, { userId }) => {
-  return db.prepare(`
-    SELECT strftime('%Y-%m', date) as month, COUNT(*) as count
-    FROM events
-    WHERE user_id = ?
-    GROUP BY month
-    ORDER BY month
-  `).all(userId);
+ipcMain.handle("delete-custom-report", async (event, id) => {
+  db.prepare("DELETE FROM custom_reports WHERE id = ?").run(id);
+  return { success: true };
 });
+
+ipcMain.handle("get-report-data", async (event, { userId, reportId }) => {
+  try {
+    return reportManager.getReportData(db, reportId, userId);
+  } catch (error) {
+    console.error("Error getting report data:", error);
+    return null;
+  }
+});
+// ... (Aquí arriba está todo tu código de base de datos, login, eventos, etc.)
 
 // ===== JSREPORT – GENERAR PDF =====
+// Copia desde aquí hasta el final del archivo
 const jsreport = require("jsreport-core")();
 jsreport.use(require("jsreport-pdf-utils")());
 jsreport.use(require("jsreport-handlebars")());
 jsreport.use(require("jsreport-chrome-pdf")());
 jsreport.init();
 
-ipcMain.handle("generate-report", async (event, { userId, type = "General" }) => {
-  const events = db.prepare("SELECT * FROM events WHERE user_id = ? ORDER BY date").all(userId);
+ipcMain.handle("generate-report", async (event, { userId, reportId }) => {
+  // 1. Obtener datos
+  const { data, columns, title } = reportManager.getReportData(db, reportId, userId);
 
+  // 2. Normalizar filas
+  let rows = [];
+  if (Array.isArray(data)) {
+    rows = data;
+  } else if (data && data.byMonth) {
+    rows = data.byMonth;
+  }
+  if (!rows) rows = [];
+
+  // 3. Cargar LOGO desde la carpeta public
+  const logoPath = path.join(__dirname, "../public/logo.png");
+  let logoHtml = "";
+
+  try {
+    if (fs.existsSync(logoPath)) {
+      const bitmap = fs.readFileSync(logoPath);
+      const base64Logo = bitmap.toString("base64");
+      // Ajusta el height (50px) según el tamaño que desees
+      logoHtml = `<img src="data:image/png;base64,${base64Logo}" style="height: 50px; object-fit: contain;" />`;
+    }
+  } catch (err) {
+    console.error("No se pudo cargar el logo para el PDF:", err);
+  }
+
+  // 4. Estilos Condicionales (Línea roja de Airam)
+  const isAiramReport = title.includes("Airam Guadalupe Hernandez");
+  const cellStyle = isAiramReport
+    ? "border: none; border-bottom: 2px solid red;"
+    : "border: 1px solid #ccc;";
+
+  // Generar filas y cabeceras HTML
+  const headersHtml = columns.map(c => `<th>${c.label}</th>`).join("");
+  const rowsHtml = rows.map(row => {
+    const cells = columns.map(c => {
+      let val = row[c.key];
+      if (val === null || val === undefined) val = "-";
+      return `<td style="padding:8px; text-align:left; ${cellStyle}">${val}</td>`;
+    }).join("");
+    return `<tr>${cells}</tr>`;
+  }).join("");
+
+  // 5. Construir HTML Principal
   const html = `
     <html>
     <head>
       <style>
-        body{font-family:Arial;margin:40px;background:#fff;color:#333}
-        h1{color:#0B3549;text-align:center}
-        h2{margin-top:30px;color:#1D9BF0}
-        table{width:100%;border-collapse:collapse;margin-bottom:20px}
-        th,td{border:1px solid #ccc;padding:8px;text-align:left}
-        th{background:#f5f5f5}
+        body { font-family: Arial; margin: 0; background: #fff; color: #333; }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #0B3549;
+            padding-bottom: 10px;
+        }
+        h1 { color: #0B3549; margin: 0; font-size: 24px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th { background: #f5f5f5; border: 1px solid #ccc; padding: 8px; text-align: left; font-size: 12px; }
+        td { font-size: 12px; }
       </style>
     </head>
     <body>
-      <h1>Informe ${type}</h1>
-      <h2>Eventos</h2>
-      <table><tr><th>Fecha</th><th>Título</th><th>Hora</th></tr>
-        ${events.map(e => `<tr><td>${e.date}</td><td>${e.title}</td><td>${e.time || "-"}</td></tr>`).join("")}
+      <div class="header-container">
+        <h1>${title}</h1>
+        <div class="logo-box">
+            ${logoHtml}
+        </div>
+      </div>
+
+      <table>
+        <tr>${headersHtml}</tr>
+        ${rowsHtml}
       </table>
-      <p>Generado el ${new Date().toLocaleString("es-ES")}</p>
+      
+      <p style="font-size:10px; color:#666; margin-top:20px;">
+        Generado el ${new Date().toLocaleString("es-ES")}
+      </p>
     </body>
     </html>
   `;
 
+  // 6. Renderizar con JSReport y opciones de Pie de Página
   const res = await jsreport.render({
-    template: { content: html, engine: "handlebars", recipe: "chrome-pdf" },
+    template: {
+      content: html,
+      engine: "handlebars",
+      recipe: "chrome-pdf",
+      chrome: {
+        displayHeaderFooter: true,
+        footerTemplate: `
+                <div style="font-size: 10px; width: 100%; text-align: center; color: #555; padding-bottom: 10px;">
+                    Página <span class="pageNumber"></span> de <span class="totalPages"></span>
+                </div>
+            `,
+        headerTemplate: "<span></span>",
+        marginTop: "20px",
+        marginBottom: "40px",
+        marginLeft: "20px",
+        marginRight: "20px"
+      }
+    },
   });
-  return res.content; // ← Buffer PDF
+
+  return res.content;
 });
